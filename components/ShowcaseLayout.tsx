@@ -25,18 +25,18 @@ export function ShowcaseLayout() {
   return (
     <div className="page-glow min-h-dvh">
       <Header />
-      <main className="mx-auto max-w-[1640px] px-4 pb-12 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-[1920px] px-3 pb-12 sm:px-4 lg:px-5">
         <section className="pb-8 pt-10 sm:pt-14 lg:pb-10" aria-labelledby="hero-heading">
           <div className="grid items-end gap-6 lg:grid-cols-[1.1fr_1fr]">
             <h1 id="hero-heading" className="max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.6rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-fg">
               {b.mainHeading}
             </h1>
-            <p className="max-w-xl text-[15px] leading-relaxed text-muted lg:justify-self-end lg:pb-2">{b.supportingCopy}</p>
+            <p className="max-w-xl text-[15px] leading-relaxed text-fg lg:justify-self-end lg:pb-2">{b.supportingCopy}</p>
           </div>
         </section>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,41fr)_minmax(0,59fr)] lg:gap-6 2xl:grid-cols-[minmax(0,45fr)_minmax(0,55fr)] 2xl:gap-7">
-          <section aria-labelledby="cx-heading" className="flex flex-col rounded-3xl border border-line bg-surface/60 p-3.5 sm:p-6 lg:p-5 2xl:p-6">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)] lg:gap-4 2xl:gap-5">
+          <section aria-labelledby="cx-heading" className="flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-4 2xl:p-5">
             <div id="cx-heading">
               <PanelHeading eyebrow="For customers" title={b.customerHeading} note="Three ways to reach the agent" />
             </div>
@@ -45,7 +45,7 @@ export function ShowcaseLayout() {
             </div>
           </section>
 
-          <section aria-labelledby="org-heading" className="flex flex-col rounded-3xl border border-line bg-surface/60 p-3.5 sm:p-6 lg:p-5 2xl:p-6">
+          <section aria-labelledby="org-heading" className="flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-5 2xl:p-6">
             <div id="org-heading">
               <PanelHeading eyebrow="For organisations" title={b.dashboardHeading} note="Click the tabs and try the controls" />
             </div>
@@ -57,7 +57,7 @@ export function ShowcaseLayout() {
       </main>
 
       <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-[1640px] flex-col gap-2 px-4 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-[1920px] flex-col gap-2 px-3 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-4 lg:px-5">
           <p>{b.footerNote}</p>
           <p>
             {b.productName} · BlueApps Technology (Pty) Ltd

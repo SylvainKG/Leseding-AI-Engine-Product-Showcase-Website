@@ -8,7 +8,7 @@ export function Header() {
   const { config, preview } = useShowcaseView();
   return (
     <header className="sticky top-0 z-30 border-b border-line/70 bg-page/80 backdrop-blur-md">
-      <div className="mx-auto flex h-[68px] max-w-[1640px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[68px] max-w-[1920px] items-center justify-between gap-4 px-3 sm:px-4 lg:px-5">
         <div className="flex min-w-0 items-center gap-4">
           <Logo />
           <span className="hidden h-5 w-px bg-line lg:block" aria-hidden="true" />

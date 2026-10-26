@@ -1,7 +1,7 @@
 /** A CSS-built smartphone frame. Content is rendered inside the screen. */
 export function DeviceFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative mx-auto w-[min(292px,74vw)]" aria-hidden="false">
+    <div className="relative mx-auto w-[min(292px,74vw)] max-w-full" aria-hidden="false">
       {/* side buttons */}
       <span className="absolute -left-[3px] top-[18%] h-8 w-[3px] rounded-l bg-line-strong" aria-hidden="true" />
       <span className="absolute -left-[3px] top-[27%] h-12 w-[3px] rounded-l bg-line-strong" aria-hidden="true" />
