@@ -89,7 +89,7 @@ public/
 
 ## Customization and persistence
 
-On `/customize` a presenter can edit the 10 colour tokens (picker + hex input with validation and contrast checks), replace 5 image slots (logo, three scenes, organisation brand preview), and edit headings, captions and the footer disclaimer — with a live preview of the real page.
+On `/customize` a presenter can edit the 12 colour tokens (picker + hex input with validation and contrast checks), replace 5 image slots (logo, three scenes, organisation brand preview), and edit headings, captions and the footer disclaimer — with a live preview of the real page.
 
 **Where changes are stored (per browser only):**
 

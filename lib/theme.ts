@@ -7,6 +7,8 @@ export const themeVarMap: Record<keyof ThemeConfig, string> = {
   secondary: "--brand-secondary",
   background: "--page-background",
   surface: "--surface",
+  sectionCard: "--section-card",
+  sectionCardText: "--section-card-text",
   text: "--text-primary",
   mutedText: "--text-muted",
   border: "--border",

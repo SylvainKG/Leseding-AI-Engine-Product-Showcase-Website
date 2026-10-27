@@ -13,6 +13,8 @@
   --brand-secondary: #f2a93b;
   --page-background: #060a18;
   --surface: #0d1430;
+  --section-card: #ffffff;
+  --section-card-text: #0d1430;
   --text-primary: #e9edf9;
   --text-muted: #8e98b8;
   --border: #1f2a4e;
@@ -23,11 +25,42 @@
 }
 
 /*
- * Derived tokens: computed from the editable ones so they follow any theme.
- * Also applied to .theme-scope so a scoped preview recomputes them.
+ * Snapshot of the base palette, taken where a theme is applied, so content
+ * inside a section card can step back out of the card's palette.
  */
 :root,
 .theme-scope {
+  --base-surface: var(--surface);
+  --base-text-primary: var(--text-primary);
+  --base-text-muted: var(--text-muted);
+  --base-border: var(--border);
+}
+
+/* The two landing-page section cards use their own palette. */
+.section-card {
+  --surface: var(--section-card);
+  --text-primary: var(--section-card-text);
+  --text-muted: color-mix(in oklab, var(--section-card-text) 62%, var(--section-card));
+  --border: color-mix(in oklab, var(--section-card-text) 14%, var(--section-card));
+}
+
+/* Restores the base palette inside a section card (e.g. the dashboard). */
+.section-card-reset {
+  --surface: var(--base-surface);
+  --text-primary: var(--base-text-primary);
+  --text-muted: var(--base-text-muted);
+  --border: var(--base-border);
+}
+
+/*
+ * Derived tokens: computed from the editable ones so they follow any theme.
+ * Also applied to .theme-scope so a scoped preview recomputes them, and to the
+ * section-card classes so they recompute from the swapped palette.
+ */
+:root,
+.theme-scope,
+.section-card,
+.section-card-reset {
   --surface-raised: color-mix(in oklab, var(--surface) 90%, var(--text-primary));
   --surface-sunken: color-mix(in oklab, var(--surface) 70%, var(--page-background));
   --border-strong: color-mix(in oklab, var(--border) 70%, var(--text-primary));

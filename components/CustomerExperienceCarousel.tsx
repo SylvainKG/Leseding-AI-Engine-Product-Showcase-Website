@@ -147,7 +147,7 @@ export function CustomerExperienceCarousel() {
       </div>
 
       {/* Indicators */}
-      <div className="mt-5 flex items-center gap-2">
+      <div className="section-card-reset mt-5 flex items-center gap-2">
         <div role="tablist" aria-label="Choose a scene" className="grid flex-1 grid-cols-3 gap-2" onKeyDown={onKeyDown}>
           {scenes.map((s, i) => {
             const selected = i === index;
@@ -161,14 +161,14 @@ export function CustomerExperienceCarousel() {
                 tabIndex={selected ? 0 : -1}
                 onClick={() => go(i)}
                 className={`group rounded-xl border px-2.5 pb-2.5 pt-2 text-left transition-colors ${
-                  selected ? "border-line-strong bg-raised" : "border-line hover:border-line-strong hover:bg-raised/60"
+                  selected ? "border-line-strong bg-raised" : "border-line bg-surface hover:border-line-strong hover:bg-raised"
                 }`}
               >
                 <span className="flex items-baseline gap-1.5">
                   <span className={`hidden text-[11px] font-semibold tabular-nums sm:inline ${selected ? "text-primary" : "text-muted"}`}>
                     0{i + 1}
                   </span>
-                  <span className={`truncate text-xs font-medium ${selected ? "text-fg" : "text-muted group-hover:text-fg"}`}>
+                  <span className="truncate text-xs font-medium text-fg">
                     {s.title}
                   </span>
                 </span>
@@ -185,7 +185,7 @@ export function CustomerExperienceCarousel() {
         <button
           type="button"
           onClick={() => setUserPaused((p) => !p)}
-          className="grid size-[52px] shrink-0 place-items-center rounded-xl border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
+          className="grid size-[52px] shrink-0 place-items-center rounded-xl border border-line bg-surface text-muted transition-colors hover:border-line-strong hover:text-fg"
           aria-label={userPaused ? "Resume automatic rotation" : "Pause automatic rotation"}
           aria-pressed={userPaused}
         >

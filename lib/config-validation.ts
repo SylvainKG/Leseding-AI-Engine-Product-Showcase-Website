@@ -50,6 +50,7 @@ export const contrastChecks: ContrastCheck[] = [
   { id: "text-bg", label: "Text on page background", fg: "text", bg: "background", min: 4.5 },
   { id: "text-surface", label: "Text on panels", fg: "text", bg: "surface", min: 4.5 },
   { id: "muted-surface", label: "Muted text on panels", fg: "mutedText", bg: "surface", min: 3 },
+  { id: "text-section", label: "Text on section cards", fg: "sectionCardText", bg: "sectionCard", min: 4.5 },
   { id: "btn", label: "Button text on primary", fg: "primaryContrast", bg: "primary", min: 4.5 },
   { id: "primary-surface", label: "Primary accents on panels", fg: "primary", bg: "surface", min: 3 },
 ];

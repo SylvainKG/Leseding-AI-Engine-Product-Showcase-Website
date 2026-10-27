@@ -36,7 +36,7 @@ export function ShowcaseLayout() {
         </section>
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)] lg:gap-4 2xl:gap-5">
-          <section aria-labelledby="cx-heading" className="flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-4 2xl:p-5">
+          <section aria-labelledby="cx-heading" className="section-card flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-4 2xl:p-5">
             <div id="cx-heading">
               <PanelHeading eyebrow="For customers" title={b.customerHeading} note="Three ways to reach the agent" />
             </div>
@@ -45,11 +45,11 @@ export function ShowcaseLayout() {
             </div>
           </section>
 
-          <section aria-labelledby="org-heading" className="flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-5 2xl:p-6">
+          <section aria-labelledby="org-heading" className="section-card flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-5 2xl:p-6">
             <div id="org-heading">
               <PanelHeading eyebrow="For organisations" title={b.dashboardHeading} note="Click the tabs and try the controls" />
             </div>
-            <div className="mt-6 flex flex-1 items-center">
+            <div className="section-card-reset mt-6 flex flex-1 items-center">
               <AdminMonitor />
             </div>
           </section>

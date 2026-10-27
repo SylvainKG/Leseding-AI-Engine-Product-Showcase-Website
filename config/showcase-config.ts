@@ -24,6 +24,8 @@ export type ThemeConfig = {
   secondary: string;
   background: string;
   surface: string;
+  sectionCard: string;
+  sectionCardText: string;
   text: string;
   mutedText: string;
   border: string;
@@ -70,6 +72,8 @@ export const defaultConfig: ShowcaseConfig = {
     secondary: "#F2A93B",
     background: "#060A18",
     surface: "#0D1430",
+    sectionCard: "#FFFFFF",
+    sectionCardText: "#0D1430",
     text: "#E9EDF9",
     mutedText: "#8E98B8",
     border: "#1F2A4E",

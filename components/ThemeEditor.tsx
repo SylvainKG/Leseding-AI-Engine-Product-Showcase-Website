@@ -11,6 +11,8 @@ export const themeFields: Array<{ key: keyof ThemeConfig; label: string; hint: s
   { key: "secondary", label: "Secondary", hint: "Supporting accent" },
   { key: "background", label: "Page background", hint: "Main page background" },
   { key: "surface", label: "Panel / surface", hint: "Cards, panels, monitor interior" },
+  { key: "sectionCard", label: "Section cards", hint: "The two main landing-page cards" },
+  { key: "sectionCardText", label: "Section card text", hint: "Headings and labels on section cards" },
   { key: "text", label: "Text", hint: "Primary body text" },
   { key: "mutedText", label: "Muted text", hint: "Secondary labels" },
   { key: "border", label: "Border", hint: "Dividers and outlines" },
