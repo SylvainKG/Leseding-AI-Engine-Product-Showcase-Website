@@ -16,15 +16,14 @@ export function ChartTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-lg border border-line-strong bg-raised px-2.5 py-2 text-[11px] shadow-xl">
+    <div className="rounded-md border border-line-strong bg-raised px-2.5 py-1.5 text-[12px] shadow-lg">
       <p className="mb-1 font-semibold text-fg">{label}</p>
       {payload.map((p) => (
         <p key={p.name} className="flex items-center gap-1.5 text-muted">
           <span className="size-2 rounded-full" style={{ background: p.stroke ?? p.color ?? p.fill }} aria-hidden="true" />
-          {p.name}: <span className="font-medium tabular-nums text-fg">{p.value}{unit}</span>
+          {p.name} <span className="ml-auto pl-3 font-medium tabular-nums text-fg">{p.value}{unit}</span>
         </p>
       ))}
-      <p className="mt-1 text-[9.5px] text-muted">Sample data</p>
     </div>
   );
 }

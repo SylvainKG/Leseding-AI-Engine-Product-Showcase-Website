@@ -116,8 +116,8 @@ export const defaultConfig: ShowcaseConfig = {
     },
   ],
   dashboard: {
-    organisationName: "Kgosi Utilities (Demo)",
-    demoLabel: "Demo data",
+    organisationName: "Kgosi Utilities",
+    demoLabel: "Sandbox",
     brandImage: "",
     brandImageAlt: "Organisation brand preview",
   },

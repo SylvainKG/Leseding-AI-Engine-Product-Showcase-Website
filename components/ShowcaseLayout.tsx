@@ -5,63 +5,65 @@ import { CustomerExperienceCarousel } from "@/components/CustomerExperienceCarou
 import { AdminMonitor } from "@/components/AdminMonitor";
 import { useShowcaseView } from "@/components/ShowcaseProvider";
 
-function PanelHeading({ eyebrow, title, note }: { eyebrow: string; title: string; note: string }) {
-  return (
-    <div className="flex items-end justify-between gap-3">
-      <div>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary">{eyebrow}</p>
-        <h2 className="mt-1 font-display text-xl font-bold tracking-tight text-fg sm:text-[22px]">{title}</h2>
-      </div>
-      <p className="hidden text-right text-xs text-muted sm:block">{note}</p>
+/** Frosted-glass stage that the phone and the monitor float on. */
+const glass =
+  "rounded-[28px] border border-white/12 bg-white/[0.06] shadow-[0_30px_80px_-40px_rgb(0_0_0/0.8)] backdrop-blur-2xl backdrop-saturate-150";
+
+/**
+ * The full showcase page. Reads everything from the active config view.
+ *
+ * On screens at least 1024 × 600 ("kiosk") the page locks to the viewport:
+ * a header carrying the headline and description, then two frosted panels
+ * side by side — the phone with its scene buttons, and the monitor — all
+ * visible without scrolling. Smaller screens get the normal stacked page.
+ */
+export function ShowcaseLayout() {
+  const { config, preview } = useShowcaseView();
+  const b = config.branding;
+  const k = (cls: string) => (preview ? "" : cls);
+
+  const intro = (id?: string) => (
+    <div>
+      <h1
+        id={id}
+        className="font-display text-[clamp(1.9rem,min(2.4vw,4.6vh),3.1rem)] font-extrabold leading-[1.03] tracking-[-0.035em] text-fg"
+      >
+        {b.mainHeading}
+      </h1>
+      <p className="mt-3 text-[clamp(13px,1.6vh,16px)] leading-snug text-fg/80">{b.supportingCopy}</p>
     </div>
   );
-}
-
-/** The full showcase page. Reads everything from the active config view. */
-export function ShowcaseLayout() {
-  const { config } = useShowcaseView();
-  const b = config.branding;
 
   return (
-    <div className="page-glow min-h-dvh">
+    <div className={`page-glow min-h-dvh ${k("kiosk:flex kiosk:h-dvh kiosk:flex-col kiosk:overflow-hidden")}`}>
       <Header />
-      <main className="mx-auto max-w-[1920px] px-3 pb-12 sm:px-4 lg:px-5">
-        <section className="pb-8 pt-10 sm:pt-14 lg:pb-10" aria-labelledby="hero-heading">
-          <div className="grid items-end gap-6 lg:grid-cols-[1.1fr_1fr]">
-            <h1 id="hero-heading" className="max-w-[16ch] font-display text-[clamp(2rem,4.4vw,3.6rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-fg">
-              {b.mainHeading}
-            </h1>
-            <p className="max-w-xl text-[15px] leading-relaxed text-fg lg:justify-self-end lg:pb-2">{b.supportingCopy}</p>
-          </div>
+      <main className={`mx-auto w-full max-w-[2400px] px-3 pb-10 sm:px-4 lg:px-6 ${k("kiosk:flex kiosk:min-h-0 kiosk:flex-1 kiosk:flex-col kiosk:py-[clamp(10px,1.6vh,22px)]")}`}>
+        {/* Headline on small screens only; in kiosk it lives in the header */}
+        <section className={`py-8 ${k("kiosk:hidden")}`} aria-labelledby="hero-heading">
+          {intro("hero-heading")}
         </section>
 
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)] lg:gap-4 2xl:gap-5">
-          <section aria-labelledby="cx-heading" className="section-card flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-4 2xl:p-5">
-            <div id="cx-heading">
-              <PanelHeading eyebrow="For customers" title={b.customerHeading} note="Three ways to reach the agent" />
-            </div>
-            <div className="mt-2 flex flex-1 flex-col">
-              <CustomerExperienceCarousel />
-            </div>
+        <div className={`grid gap-6 ${k("kiosk:min-h-0 kiosk:flex-1 kiosk:grid-cols-[auto_minmax(0,1fr)] kiosk:gap-[clamp(14px,1.4vw,28px)]")}`}>
+          <section aria-labelledby="cx-heading" className={`${glass} p-4 sm:p-6 ${k("kiosk:min-h-0 kiosk:p-[clamp(14px,2vh,28px)]")}`}>
+            <h2 id="cx-heading" className="sr-only">
+              {b.customerHeading}
+            </h2>
+            <CustomerExperienceCarousel />
           </section>
 
-          <section aria-labelledby="org-heading" className="section-card flex flex-col rounded-3xl border border-line bg-surface p-3.5 sm:p-6 lg:p-5 2xl:p-6">
-            <div id="org-heading">
-              <PanelHeading eyebrow="For organisations" title={b.dashboardHeading} note="Click the tabs and try the controls" />
-            </div>
-            <div className="section-card-reset mt-6 flex flex-1 items-center">
-              <AdminMonitor />
-            </div>
+          <section aria-labelledby="org-heading" className={`${glass} flex flex-col p-3 sm:p-5 ${k("kiosk:min-h-0 kiosk:p-[clamp(12px,1.8vh,24px)]")}`}>
+            <h2 id="org-heading" className="sr-only">
+              {b.dashboardHeading}
+            </h2>
+            <AdminMonitor label={b.dashboardHeading} />
           </section>
         </div>
       </main>
 
-      <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-[1920px] flex-col gap-2 px-3 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-4 lg:px-5">
+      <footer className={`border-t border-line/60 ${k("kiosk:border-t-0")}`}>
+        <div className={`mx-auto flex max-w-[2400px] flex-col gap-2 px-3 py-6 text-xs text-fg/60 sm:flex-row sm:items-center sm:justify-between sm:px-4 lg:px-6 ${k("kiosk:pt-0 kiosk:pb-2.5")}`}>
           <p>{b.footerNote}</p>
-          <p>
-            {b.productName} · BlueApps Technology (Pty) Ltd
-          </p>
+          <p>{b.productName} · BlueApps Technology (Pty) Ltd</p>
         </div>
       </footer>
     </div>

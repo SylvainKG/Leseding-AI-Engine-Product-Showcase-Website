@@ -45,21 +45,22 @@ export function KnowledgeBaseTab() {
               }
             />
           ) : (
-            <table className="w-full text-left text-[12px]">
+            <table className="w-full text-left text-[13px]">
               <caption className="sr-only">Sample knowledge entries</caption>
-              <thead className="text-[10.5px] uppercase tracking-wide text-muted">
+              <thead className="text-[11.5px] text-muted">
                 <tr className="border-b border-line">
                   <th scope="col" className="px-3.5 py-2 font-medium">Entry</th>
                   <th scope="col" className="hidden px-2 py-2 font-medium @xl:table-cell">Category</th>
                   <th scope="col" className="px-2 py-2 font-medium">Status</th>
-                  <th scope="col" className="hidden px-3.5 py-2 font-medium @lg:table-cell">Updated</th>
+                  <th scope="col" className="hidden whitespace-nowrap px-2 py-2 text-right font-medium @2xl:table-cell">Uses, 7 days</th>
+                  <th scope="col" className="hidden px-3.5 py-2 font-medium @lg:table-cell">Last edited</th>
                 </tr>
               </thead>
               <tbody>
                 {list.map((e) => (
-                  <tr key={e.id} className={`border-b border-line last:border-0 ${openId === e.id ? "bg-primary/8" : "hover:bg-fg/4"}`}>
+                  <tr key={e.id} className={`border-b border-line last:border-0 ${openId === e.id ? "bg-flag-blue/15" : "hover:bg-fg/4"}`}>
                     <td className="px-3.5 py-2">
-                      <button type="button" onClick={() => setOpenId(e.id)} className="flex items-center gap-2 text-left font-medium text-fg hover:text-primary" aria-pressed={openId === e.id}>
+                      <button type="button" onClick={() => setOpenId(e.id)} className="flex items-center gap-2 text-left font-medium text-fg hover:text-sky-ink" aria-pressed={openId === e.id}>
                         <FileText className="size-3.5 shrink-0 text-muted" aria-hidden="true" />
                         <span>{e.name}</span>
                       </button>
@@ -68,7 +69,10 @@ export function KnowledgeBaseTab() {
                     <td className="px-2 py-2">
                       <Badge tone={statusTone(e.status)}>{e.status}</Badge>
                     </td>
-                    <td className="hidden whitespace-nowrap px-3.5 py-2 text-muted @lg:table-cell">{e.updated}</td>
+                    <td className="hidden px-2 py-2 text-right tabular-nums text-muted @2xl:table-cell">{e.uses ? e.uses.toLocaleString("en-GB") : "—"}</td>
+                    <td className="hidden whitespace-nowrap px-3.5 py-2 text-muted @lg:table-cell">
+                      {e.updated} <span className="text-muted/70">· {e.editor}</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -79,21 +83,21 @@ export function KnowledgeBaseTab() {
         <Card title="Entry details" className="h-fit">
           {open ? (
             <div className="space-y-2.5">
-              <p className="text-[13px] font-semibold text-fg">{open.name}</p>
+              <p className="text-[14px] font-semibold text-fg">{open.name}</p>
               <div className="flex flex-wrap gap-1.5">
                 <Badge tone={statusTone(open.status)}>{open.status}</Badge>
                 <Badge tone="muted" icon={false}>{open.category}</Badge>
               </div>
-              <p className="text-[11.5px] leading-relaxed text-muted">{open.summary}</p>
-              <p className="text-[10.5px] text-muted">Last updated {open.updated}</p>
+              <p className="text-[12.5px] leading-relaxed text-muted">{open.summary}</p>
+              <p className="text-[11.5px] text-muted">Last edited {open.updated} by {open.editor}{open.uses ? ` · used in ${open.uses} calls this week` : " · not used yet"}</p>
               {open.simulated && (
-                <p className="rounded-lg border border-dashed border-warning/50 bg-warning/8 p-2 text-[10.5px] text-warning">
-                  Simulated entry — no file was uploaded or indexed.
+                <p className="rounded-lg border border-dashed border-warning/50 bg-warning/8 p-2 text-[11.5px] text-warning">
+                  Sandbox entry. No file was uploaded or indexed.
                 </p>
               )}
             </div>
           ) : (
-            <p className="text-[11.5px] text-muted">Select an entry to see its details.</p>
+            <p className="text-[12.5px] text-muted">Select an entry to see its details.</p>
           )}
         </Card>
       </div>
@@ -108,13 +112,15 @@ export function KnowledgeBaseTab() {
               category,
               status: "Draft" as const,
               updated: "Just now",
-              summary: "Placeholder entry created in the demo. In the real product, a document would be processed before the agent can use it.",
+              editor: "Kagiso M.",
+              uses: 0,
+              summary: "Waiting for a document. Lesedi starts using an entry once it has been processed and published.",
               simulated: true,
             };
             dispatch({ type: "kbAdd", entry });
             setOpenId(entry.id);
             setAdding(false);
-            notify("Demo entry added. Nothing was uploaded or indexed.", "info");
+            notify("Entry added as a draft.", "info");
           }}
         />
       )}
@@ -138,20 +144,20 @@ function AddDocumentModal({ onClose, onAdd }: { onClose: () => void; onAdd: (nam
 
   return (
     <div className="absolute inset-0 z-40 grid place-items-center bg-page/70 p-4 backdrop-blur-sm" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} className="w-full max-w-sm rounded-2xl border border-line-strong bg-surface p-4 shadow-2xl">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} className="w-full max-w-sm rounded-lg border border-line-strong bg-surface p-4 shadow-xl">
         <div className="flex items-start justify-between">
           <div>
             <h3 id={`${id}-title`} className="text-[14px] font-semibold text-fg">Add document</h3>
-            <p className="mt-0.5 text-[11px] text-muted">Simulation — files are not uploaded.</p>
+            <p className="mt-0.5 text-[12px] text-muted">Sandbox: files are not uploaded.</p>
           </div>
           <Button variant="ghost" className="!h-7 !px-1.5" onClick={onClose} aria-label="Close">
             <X className="size-4" />
           </Button>
         </div>
-        <div className="mt-3 flex flex-col items-center rounded-xl border border-dashed border-line-strong bg-sunken px-4 py-5 text-center" aria-hidden="true">
+        <div className="mt-3 flex flex-col items-center rounded-md border border-dashed border-line-strong bg-sunken px-4 py-5 text-center" aria-hidden="true">
           <Upload className="size-5 text-muted" />
-          <p className="mt-1.5 text-[11.5px] text-fg">Drop PDF, DOCX or TXT here</p>
-          <p className="text-[10.5px] text-muted">Illustration only in this demo</p>
+          <p className="mt-1.5 text-[12.5px] text-fg">Drop PDF, DOCX or TXT here</p>
+          <p className="text-[11.5px] text-muted">Up to 20 MB</p>
         </div>
         <form
           className="mt-3 space-y-3"
@@ -169,7 +175,7 @@ function AddDocumentModal({ onClose, onAdd }: { onClose: () => void; onAdd: (nam
           <div className="flex justify-end gap-2 pt-1">
             <Button onClick={onClose}>Cancel</Button>
             <Button variant="primary" type="submit" disabled={!name.trim()}>
-              Add demo entry
+              Add entry
             </Button>
           </div>
         </form>

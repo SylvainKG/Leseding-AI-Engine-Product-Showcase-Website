@@ -1,19 +1,16 @@
 /** A CSS-built smartphone frame. Content is rendered inside the screen. */
 export function DeviceFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative mx-auto w-[min(292px,74vw)] max-w-full" aria-hidden="false">
+    <div className="relative mx-auto aspect-[9/19.2] w-[min(292px,74vw)] max-w-full kiosk:h-full kiosk:max-h-[820px] kiosk:w-auto" aria-hidden="false">
       {/* side buttons */}
-      <span className="absolute -left-[3px] top-[18%] h-8 w-[3px] rounded-l bg-line-strong" aria-hidden="true" />
-      <span className="absolute -left-[3px] top-[27%] h-12 w-[3px] rounded-l bg-line-strong" aria-hidden="true" />
-      <span className="absolute -right-[3px] top-[24%] h-16 w-[3px] rounded-r bg-line-strong" aria-hidden="true" />
+      <span className="absolute -left-[3px] top-[18%] h-8 w-[3px] rounded-l bg-[#1d2023]" aria-hidden="true" />
+      <span className="absolute -left-[3px] top-[27%] h-12 w-[3px] rounded-l bg-[#1d2023]" aria-hidden="true" />
+      <span className="absolute -right-[3px] top-[24%] h-16 w-[3px] rounded-r bg-[#1d2023]" aria-hidden="true" />
       <div
-        className="relative aspect-[9/19.2] rounded-[46px] bg-bezel p-[9px] ring-1 ring-line-strong"
-        style={{
-          boxShadow:
-            "0 40px 80px -30px color-mix(in oklab, var(--brand-primary) 35%, transparent), 0 20px 40px -20px rgb(0 0 0 / 0.6), inset 0 0 0 1.5px color-mix(in oklab, var(--text-primary) 10%, transparent)",
-        }}
+        className="relative h-full w-full rounded-[44px] bg-[#0b0c0e] p-[9px] ring-1 ring-black"
+        style={{ boxShadow: "0 30px 60px -28px rgb(0 0 0 / 0.75), inset 0 0 0 1.5px rgb(255 255 255 / 0.08)" }}
       >
-        <div className="relative h-full w-full overflow-hidden rounded-[37px] bg-page">
+        <div className="relative h-full w-full overflow-hidden rounded-[35px] bg-page">
           {children}
           {/* dynamic island */}
           <span

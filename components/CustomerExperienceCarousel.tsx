@@ -18,6 +18,7 @@ const coded: Record<SceneId, (p: { active: boolean }) => React.ReactNode> = {
   "max-it-concept": MaxItConceptScene,
 };
 
+/** Phone scenes, with the scene buttons and caption underneath. */
 export function CustomerExperienceCarousel() {
   const { config, localImages } = useShowcaseView();
   const scenes = config.scenes;
@@ -87,7 +88,7 @@ export function CustomerExperienceCarousel() {
   return (
     <div
       ref={rootRef}
-      className="flex h-full flex-col"
+      className="flex h-full flex-col gap-4 kiosk:gap-[clamp(10px,1.4vh,18px)]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setFocused(true)}
@@ -98,12 +99,7 @@ export function CustomerExperienceCarousel() {
       aria-label="Customer experience scenes"
     >
       {/* Stage */}
-      <div className="relative flex flex-1 items-center justify-center py-6 sm:py-8">
-        <div
-          className="pointer-events-none absolute inset-x-8 top-1/2 h-2/3 -translate-y-1/2 rounded-full blur-3xl"
-          style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--brand-primary) 22%, transparent), transparent)" }}
-          aria-hidden="true"
-        />
+      <div className="relative flex items-center justify-center py-2 kiosk:min-h-0 kiosk:flex-1 kiosk:py-0">
         <DeviceFrame>
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
@@ -130,67 +126,47 @@ export function CustomerExperienceCarousel() {
         </DeviceFrame>
       </div>
 
-      {/* Caption */}
-      <div className="min-h-[64px] text-center" aria-live={paused ? "polite" : "off"}>
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={scene.id}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: reduceMotion ? 0 : -6 }}
-            transition={{ duration: 0.35 }}
+      {/* Scene buttons + caption */}
+      <div className="shrink-0">
+        <div className="flex items-stretch gap-1.5">
+          <div role="tablist" aria-label="Choose a scene" className="grid flex-1 grid-cols-3 gap-1.5" onKeyDown={onKeyDown}>
+            {scenes.map((s, i) => {
+              const selected = i === index;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  aria-controls={`${baseId}-panel-${s.id}`}
+                  tabIndex={selected ? 0 : -1}
+                  onClick={() => go(i)}
+                  title={s.title}
+                  className={`relative overflow-hidden rounded-lg border px-2 py-2 text-center transition-colors ${
+                    selected ? "border-white/25 bg-white/14" : "border-white/8 bg-white/[0.03] hover:bg-white/8"
+                  }`}
+                >
+                  <span className={`block truncate text-[13px] font-semibold ${selected ? "text-fg" : "text-fg/70"}`}>{s.title}</span>
+                  <span className="absolute inset-x-0 bottom-0 block h-[2px]" aria-hidden="true">
+                    <span className="block h-full bg-fg/80" style={{ width: selected ? `${Math.min(100, (elapsed / DWELL_MS) * 100)}%` : "0%" }} />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => setUserPaused((p) => !p)}
+            className="grid w-9 shrink-0 place-items-center rounded-lg border border-white/8 bg-white/[0.03] text-fg/70 transition-colors hover:bg-white/8 hover:text-fg"
+            aria-label={userPaused ? "Resume automatic rotation" : "Pause automatic rotation"}
+            aria-pressed={userPaused}
           >
-            <h3 className="font-display text-lg font-bold text-fg">{scene.title}</h3>
-            <p className="mx-auto mt-1 max-w-sm text-sm text-muted">{scene.caption}</p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Indicators */}
-      <div className="section-card-reset mt-5 flex items-center gap-2">
-        <div role="tablist" aria-label="Choose a scene" className="grid flex-1 grid-cols-3 gap-2" onKeyDown={onKeyDown}>
-          {scenes.map((s, i) => {
-            const selected = i === index;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                role="tab"
-                aria-selected={selected}
-                aria-controls={`${baseId}-panel-${s.id}`}
-                tabIndex={selected ? 0 : -1}
-                onClick={() => go(i)}
-                className={`group rounded-xl border px-2.5 pb-2.5 pt-2 text-left transition-colors ${
-                  selected ? "border-line-strong bg-raised" : "border-line bg-surface hover:border-line-strong hover:bg-raised"
-                }`}
-              >
-                <span className="flex items-baseline gap-1.5">
-                  <span className={`hidden text-[11px] font-semibold tabular-nums sm:inline ${selected ? "text-primary" : "text-muted"}`}>
-                    0{i + 1}
-                  </span>
-                  <span className="truncate text-xs font-medium text-fg">
-                    {s.title}
-                  </span>
-                </span>
-                <span className="mt-2 block h-[3px] overflow-hidden rounded-full bg-line" aria-hidden="true">
-                  <span
-                    className="block h-full rounded-full bg-primary"
-                    style={{ width: selected ? `${Math.min(100, (elapsed / DWELL_MS) * 100)}%` : "0%" }}
-                  />
-                </span>
-              </button>
-            );
-          })}
+            {userPaused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => setUserPaused((p) => !p)}
-          className="grid size-[52px] shrink-0 place-items-center rounded-xl border border-line bg-surface text-muted transition-colors hover:border-line-strong hover:text-fg"
-          aria-label={userPaused ? "Resume automatic rotation" : "Pause automatic rotation"}
-          aria-pressed={userPaused}
-        >
-          {userPaused ? <Play className="size-4" /> : <Pause className="size-4" />}
-        </button>
+        <p className="mt-2 truncate text-center text-[13px] text-fg/70" aria-live={paused ? "polite" : "off"}>
+          {scene.caption}
+        </p>
       </div>
     </div>
   );

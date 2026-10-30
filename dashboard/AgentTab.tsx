@@ -9,10 +9,9 @@ import { Badge, Button, Card, Field, Select, Toggle, inputClass } from "@/dashbo
 export function SaveBar({ dirty, onSave, onCancel, note }: { dirty: boolean; onSave: () => void; onCancel: () => void; note: string }) {
   return (
     <div className="sticky bottom-0 z-10 -mx-3 mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-line bg-surface/95 px-3 py-2.5 backdrop-blur @md:-mx-4 @md:px-4">
-      <p className="flex items-center gap-1.5 text-[10.5px] text-muted">
+      <p className="flex items-center gap-1.5 text-[11.5px] text-muted">
         <Info className="size-3.5 shrink-0" aria-hidden="true" />
-        {dirty ? "Unsaved changes. " : ""}
-        {note}
+        {dirty ? "You have unsaved changes." : note}
       </p>
       <div className="flex gap-2">
         <Button onClick={onCancel} disabled={!dirty}>
@@ -69,20 +68,20 @@ export function AgentTab() {
             <div className="space-y-3">
               <Toggle
                 label="Agent status"
-                description={d.active ? "Demo active — answering in this simulation" : "Paused in this simulation"}
+                description={d.active ? "Answering calls on all enabled channels" : "Paused. Calls go straight to your team"}
                 checked={d.active}
                 onChange={(v) => set({ active: v })}
               />
               <fieldset>
-                <legend className="text-[11.5px] font-medium text-fg">Languages</legend>
+                <legend className="text-[12.5px] font-medium text-fg">Languages</legend>
                 <div className="mt-1.5 flex flex-wrap gap-2">
                   {languageOptions.map((lang) => {
                     const on = d.languages.includes(lang);
                     return (
                       <label
                         key={lang}
-                        className={`flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-1.5 text-[12px] transition-colors ${
-                          on ? "border-primary bg-primary/10 text-fg" : "border-line text-muted hover:border-line-strong"
+                        className={`flex cursor-pointer items-center gap-2 rounded-md border px-2.5 py-1.5 text-[13px] transition-colors ${
+                          on ? "border-fg bg-fg/5 text-fg" : "border-line text-muted hover:border-line-strong"
                         }`}
                       >
                         <input
@@ -99,7 +98,7 @@ export function AgentTab() {
                     );
                   })}
                 </div>
-                <p className="mt-1 text-[10.5px] text-muted">Demo choices. At least one language stays selected.</p>
+                <p className="mt-1 text-[11.5px] text-muted">Lesedi answers in the caller&rsquo;s language and follows them if they switch mid-call.</p>
               </fieldset>
               <div className="grid gap-3 @lg:grid-cols-3">
                 <Field label="Operating hours" htmlFor={`${id}-hours`}>
@@ -112,7 +111,7 @@ export function AgentTab() {
                   <input id={`${id}-to`} type="time" className={inputClass} value={d.hoursTo} disabled={d.hoursMode === "24/7"} onChange={(e) => set({ hoursTo: e.target.value })} />
                 </Field>
               </div>
-              <Field label="Human handoff" htmlFor={`${id}-handoff`} hint="Simulated — shows how a handoff rule could be configured.">
+              <Field label="Human handoff" htmlFor={`${id}-handoff`} hint="Billing disputes and identity checks always go to an agent.">
                 <Select
                   id={`${id}-handoff`}
                   label="Human handoff"
@@ -126,38 +125,38 @@ export function AgentTab() {
         </div>
 
         {/* Live preview of the agent card */}
-        <Card title="Preview" className="h-fit">
+        <Card title="Greeting preview" className="h-fit">
           <div className="flex items-center gap-2.5">
-            <span className="grid size-9 place-items-center rounded-full bg-primary text-primary-contrast">
+            <span className="grid size-9 place-items-center rounded-full bg-fg/8 text-fg">
               <Bot className="size-4" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <p className="truncate text-[12.5px] font-semibold text-fg">{d.name || "Unnamed agent"}</p>
-              <p className="text-[10.5px] text-muted">{d.tone}</p>
+              <p className="truncate text-[13.5px] font-semibold text-fg">{d.name || "Unnamed agent"}</p>
+              <p className="text-[11.5px] text-muted">{d.tone}</p>
             </div>
           </div>
-          <div className="mt-3 rounded-xl rounded-tl-sm bg-sunken p-2.5 text-[11.5px] leading-relaxed text-fg ring-1 ring-line">
+          <div className="mt-3 rounded-md bg-sunken p-2.5 text-[12.5px] leading-relaxed text-fg ring-1 ring-line">
             {d.welcome || "…"}
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5">
-            <Badge tone={d.active ? "success" : "muted"}>{d.active ? "Demo active" : "Paused"}</Badge>
+            <Badge tone={d.active ? "success" : "muted"}>{d.active ? "Active" : "Paused"}</Badge>
             {d.languages.map((l) => (
               <Badge key={l} tone="primary" icon={false}>
                 {l}
               </Badge>
             ))}
           </div>
-          <p className="mt-3 text-[10.5px] text-muted">Changes here update this demo only. They do not affect a production agent.</p>
+          <p className="mt-3 text-[11.5px] text-muted">This is how Lesedi opens every call.</p>
         </Card>
       </div>
 
       <SaveBar
         dirty={dirty}
-        note="Saved locally in this demo."
+        note="Changes apply to new calls once saved."
         onCancel={() => dispatch({ type: "agentCancel" })}
         onSave={() => {
           dispatch({ type: "agentSave" });
-          notify("Agent settings saved in this demo. No live agent was changed.");
+          notify("Agent settings saved.");
         }}
       />
     </div>

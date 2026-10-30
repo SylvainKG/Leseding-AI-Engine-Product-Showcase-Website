@@ -3,6 +3,13 @@
 @import "@fontsource-variable/manrope";
 
 /*
+ * "kiosk": large enough to show the whole showcase on one screen with no
+ * scrolling (exhibition screens, laptops). Smaller screens keep the normal
+ * scrolling layout.
+ */
+@custom-variant kiosk (@media (min-width: 1024px) and (min-height: 600px));
+
+/*
  * Design tokens. Defaults mirror config/showcase-config.ts and are overwritten
  * at runtime from the active configuration (see lib/theme.ts). Components use
  * these tokens only — never raw brand hex values.
@@ -60,7 +67,8 @@
 :root,
 .theme-scope,
 .section-card,
-.section-card-reset {
+.section-card-reset,
+.console {
   --surface-raised: color-mix(in oklab, var(--surface) 90%, var(--text-primary));
   --surface-sunken: color-mix(in oklab, var(--surface) 70%, var(--page-background));
   --border-strong: color-mix(in oklab, var(--border) 70%, var(--text-primary));
@@ -69,6 +77,51 @@
   --primary-active: color-mix(in oklab, var(--brand-primary) 82%, var(--page-background));
   --device-bezel: color-mix(in oklab, var(--page-background) 80%, #000);
   --danger: #e5484d;
+}
+
+/*
+ * The organisation console (the dashboard inside the monitor) has its own
+ * light product theme, taken from the Botswana flag: white, black and sky
+ * blue. It deliberately does not follow the showcase page palette, the same
+ * way a real product's UI doesn't change with the marketing site.
+ */
+.console {
+  --flag-blue: #75aadb;
+  --flag-black: #15181c;
+  --page-background: #e9ecef;
+  --surface: #ffffff;
+  --text-primary: #15181c;
+  --text-muted: #5d646c;
+  --border: #dde1e5;
+  --brand-primary: #15181c;
+  --brand-primary-contrast: #ffffff;
+  --brand-secondary: #2b6ca3;
+  --success: #17803d;
+  --warning: #b45309;
+  --danger: #b42318;
+
+  /* Data colours */
+  --chart-resolved: #5f9fd6;
+  --chart-transferred: #2c3137;
+  --chart-abandoned: #c4c9cf;
+  /* Text-safe flag blue, for Lesedi's name in transcripts and links. */
+  --sky-ink: #23649c;
+
+  color-scheme: light;
+  background: var(--page-background);
+  color: var(--text-primary);
+}
+
+/* Botswana flag band: blue, white, black, white, blue. */
+.flag-band {
+  background: linear-gradient(
+    to bottom,
+    var(--flag-blue) 0 38%,
+    #fff 38% 44%,
+    var(--flag-black) 44% 56%,
+    #fff 56% 62%,
+    var(--flag-blue) 62% 100%
+  );
 }
 
 @theme inline {
@@ -90,6 +143,8 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-bezel: var(--device-bezel);
+  --color-sky-ink: var(--sky-ink);
+  --color-flag-blue: var(--flag-blue);
 
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Manrope Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
@@ -159,10 +214,13 @@ body {
   background:
     linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--page-background) 58%, transparent),
-      color-mix(in oklab, var(--page-background) 82%, transparent)
+      color-mix(in oklab, var(--page-background) 42%, transparent),
+      color-mix(in oklab, var(--page-background) 74%, transparent)
     ),
     url("/backgrounds/wallbackground.webp") center / cover no-repeat;
+  /* Soft focus, so the phone and monitor read as sitting in front of it. */
+  filter: blur(5px) saturate(1.1);
+  transform: scale(1.04);
 }
 
 @media (prefers-reduced-motion: reduce) {

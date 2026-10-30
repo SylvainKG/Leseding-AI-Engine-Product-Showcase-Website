@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useId } from "react";
-import { CheckCircle2, AlertTriangle, Clock, Circle, Search, type LucideIcon } from "lucide-react";
+import { Search, type LucideIcon } from "lucide-react";
 
 export function Card({
   title,
@@ -17,60 +17,57 @@ export function Card({
   bodyClassName?: string;
 }) {
   return (
-    <section className={`rounded-xl border border-line bg-surface ${className}`}>
+    <section className={`rounded-lg border border-line bg-surface ${className}`}>
       {(title || action) && (
-        <header className="flex items-center justify-between gap-2 px-3.5 pt-3">
-          {title && <h3 className="text-[12.5px] font-semibold text-fg">{title}</h3>}
+        <header className="flex min-h-9 items-center justify-between gap-2 border-b border-line px-3 py-1.5">
+          {title && <h3 className="text-[13px] font-semibold text-fg">{title}</h3>}
           {action}
         </header>
       )}
-      <div className={`p-3.5 ${title || action ? "pt-2.5" : ""} ${bodyClassName}`}>{children}</div>
+      <div className={`p-3 ${bodyClassName}`}>{children}</div>
     </section>
   );
 }
 
 type Tone = "success" | "warning" | "primary" | "muted" | "danger";
 
-const toneClass: Record<Tone, string> = {
-  success: "text-success bg-success/12 ring-success/25",
-  warning: "text-warning bg-warning/12 ring-warning/25",
-  primary: "text-primary bg-primary/14 ring-primary/30",
-  muted: "text-muted bg-fg/6 ring-line",
-  danger: "text-danger bg-danger/12 ring-danger/25",
+const toneText: Record<Tone, string> = {
+  success: "text-success",
+  warning: "text-warning",
+  primary: "text-primary",
+  muted: "text-muted",
+  danger: "text-danger",
 };
 
-const toneIcon: Record<Tone, LucideIcon> = {
-  success: CheckCircle2,
-  warning: AlertTriangle,
-  primary: Clock,
-  muted: Circle,
-  danger: AlertTriangle,
+const toneDot: Record<Tone, string> = {
+  success: "bg-success",
+  warning: "bg-warning",
+  primary: "bg-primary",
+  muted: "bg-muted",
+  danger: "bg-danger",
 };
 
-/** Status badge — always pairs colour with an icon and text. */
+/** Status label: a coloured dot plus text, so meaning never relies on colour alone. */
 export function Badge({ tone, children, icon = true }: { tone: Tone; children: React.ReactNode; icon?: boolean }) {
-  const Icon = toneIcon[tone];
   return (
-    <span
-      className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-[10.5px] font-medium ring-1 ring-inset ${toneClass[tone]}`}
-    >
-      {icon && <Icon className="size-3" aria-hidden="true" />}
-      {children}
+    <span className={`inline-flex items-center gap-1.5 whitespace-nowrap text-[12px] font-medium ${tone === "muted" ? "text-muted" : "text-fg"}`}>
+      {icon && <span className={`size-1.5 shrink-0 rounded-full ${toneDot[tone]}`} aria-hidden="true" />}
+      <span className={icon ? "" : toneText[tone]}>{children}</span>
     </span>
   );
 }
 
 export function statusTone(status: string): Tone {
-  if (["Resolved", "Published", "Completed", "Updated"].includes(status)) return "success";
-  if (["Escalated", "Needs review"].includes(status)) return "warning";
+  if (["Resolved", "Resolved by Lesedi", "Published", "Completed", "Updated"].includes(status)) return "success";
+  if (["Transferred", "Escalated", "Needs review"].includes(status)) return "warning";
+  if (["Abandoned"].includes(status)) return "danger";
   if (["In progress"].includes(status)) return "primary";
   return "muted";
 }
 
 export function DemoTag({ children = "Demo data" }: { children?: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-line-strong px-1.5 py-0.5 text-[10px] font-medium text-muted">
-      <span className="size-1.5 rounded-full bg-secondary" aria-hidden="true" />
+    <span className="inline-flex items-center rounded border border-line px-1.5 py-px text-[11px] font-medium text-muted">
       {children}
     </span>
   );
@@ -83,8 +80,8 @@ export const Button = forwardRef<
   React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: BtnVariant; size?: "sm" | "md" }
 >(function Button({ variant = "secondary", size = "sm", className = "", ...props }, ref) {
   const base =
-    "inline-flex items-center justify-center gap-1.5 rounded-lg font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-45";
-  const sizes = size === "sm" ? "h-8 px-3 text-[12px]" : "h-10 px-4 text-sm";
+    "inline-flex items-center justify-center gap-1.5 rounded-md font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-45";
+  const sizes = size === "sm" ? "h-7 px-2.5 text-[13px]" : "h-10 px-4 text-sm";
   const variants: Record<BtnVariant, string> = {
     primary: "bg-primary text-primary-contrast hover:bg-primary-hover active:bg-primary-active disabled:hover:bg-primary",
     secondary: "border border-line bg-raised text-fg hover:border-line-strong active:bg-sunken",
@@ -106,17 +103,17 @@ export function Field({
 }) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={htmlFor} className="block text-[11.5px] font-medium text-fg">
+      <label htmlFor={htmlFor} className="block text-[12.5px] font-medium text-fg">
         {label}
       </label>
       {children}
-      {hint && <p className="text-[10.5px] text-muted">{hint}</p>}
+      {hint && <p className="text-[11.5px] text-muted">{hint}</p>}
     </div>
   );
 }
 
 export const inputClass =
-  "w-full rounded-lg border border-line bg-sunken px-2.5 py-1.5 text-[12.5px] text-fg placeholder:text-muted/70 outline-none transition-colors hover:border-line-strong focus:border-primary focus-visible:outline-none focus:ring-2 focus:ring-primary/30";
+  "w-full rounded-md border border-line bg-sunken px-2.5 py-1.5 text-[13.5px] text-fg placeholder:text-muted/70 outline-none transition-colors hover:border-line-strong focus:border-primary focus-visible:outline-none focus:ring-1 focus:ring-primary/40";
 
 export function SearchInput({
   value,
@@ -202,10 +199,10 @@ export function Toggle({
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="min-w-0">
-        <p id={id} className="text-[12px] font-medium text-fg">
+        <p id={id} className="text-[13px] font-medium text-fg">
           {label}
         </p>
-        {description && <p className="text-[10.5px] text-muted">{description}</p>}
+        {description && <p className="text-[11.5px] text-muted">{description}</p>}
       </div>
       <button
         type="button"
@@ -216,8 +213,8 @@ export function Toggle({
         className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${checked ? "bg-primary" : "bg-line-strong"}`}
       >
         <span
-          className={`absolute top-0.5 size-4 rounded-full bg-white shadow transition-transform ${
-            checked ? "translate-x-[18px]" : "translate-x-0.5"
+          className={`absolute top-0.5 left-0.5 size-4 rounded-full bg-white shadow transition-transform ${
+            checked ? "translate-x-4" : "translate-x-0"
           }`}
           aria-hidden="true"
         />
@@ -232,8 +229,8 @@ export function EmptyState({ icon: Icon, title, body, action }: { icon: LucideIc
       <span className="grid size-10 place-items-center rounded-full bg-fg/6 text-muted">
         <Icon className="size-5" aria-hidden="true" />
       </span>
-      <p className="mt-3 text-[12.5px] font-semibold text-fg">{title}</p>
-      <p className="mt-1 max-w-xs text-[11.5px] text-muted">{body}</p>
+      <p className="mt-3 text-[13.5px] font-semibold text-fg">{title}</p>
+      <p className="mt-1 max-w-xs text-[12.5px] text-muted">{body}</p>
       {action && <div className="mt-3">{action}</div>}
     </div>
   );
@@ -241,13 +238,13 @@ export function EmptyState({ icon: Icon, title, body, action }: { icon: LucideIc
 
 export function IconTile({ icon: Icon, tone = "primary" }: { icon: LucideIcon; tone?: "primary" | "secondary" | "success" | "warning" }) {
   const cls = {
-    primary: "bg-primary/15 text-primary ring-primary/30",
-    secondary: "bg-secondary/15 text-secondary ring-secondary/30",
-    success: "bg-success/15 text-success ring-success/30",
-    warning: "bg-warning/15 text-warning ring-warning/30",
+    primary: "bg-fg/6 text-muted",
+    secondary: "bg-fg/6 text-secondary",
+    success: "bg-fg/6 text-success",
+    warning: "bg-fg/6 text-warning",
   }[tone];
   return (
-    <span className={`grid size-7 shrink-0 place-items-center rounded-lg ring-1 ring-inset ${cls}`}>
+    <span className={`grid size-6 shrink-0 place-items-center rounded-md ${cls}`}>
       <Icon className="size-3.5" aria-hidden="true" />
     </span>
   );

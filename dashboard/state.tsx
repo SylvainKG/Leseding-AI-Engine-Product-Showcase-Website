@@ -102,7 +102,7 @@ export function DashboardProvider({ orgName, children }: { orgName: string; chil
 
   const resetDemo = useCallback(() => {
     dispatch({ type: "reset", orgName });
-    notify("Demo reset — all sample data and settings restored.", "info");
+    notify("Sandbox reset to its starting data.", "info");
   }, [orgName, notify]);
 
   // If the configured organisation name changes (via /customize), follow it
