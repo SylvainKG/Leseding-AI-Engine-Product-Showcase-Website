@@ -2,6 +2,7 @@
 
 import { Logo } from "@/components/Brand";
 import { CustomizeButton } from "@/components/CustomizeButton";
+import { HowItWorksButton } from "@/components/HowItWorks";
 import { useShowcaseView } from "@/components/ShowcaseProvider";
 
 /**
@@ -19,7 +20,7 @@ export function Header() {
           kiosk ? "kiosk:h-[clamp(64px,8vh,84px)] kiosk:gap-[clamp(16px,2vw,40px)]" : ""
         }`}
       >
-        <div className="flex min-w-0 items-center gap-4 kiosk:gap-[clamp(14px,1.6vw,28px)]">
+        <div className="flex min-w-0 items-center gap-4 kiosk:shrink-0 kiosk:gap-[clamp(14px,1.6vw,28px)]">
           <Logo />
           <span className="hidden h-8 w-px bg-white/15 lg:block" aria-hidden="true" />
           {kiosk ? (
@@ -38,7 +39,7 @@ export function Header() {
         </div>
         <div className="flex min-w-0 items-center gap-4">
           {kiosk && (
-            <p className="hidden max-w-[min(40vw,640px)] text-[clamp(12px,1.45vh,15px)] leading-snug text-fg/75 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden min-[1280px]:kiosk:block">
+            <p className="hidden max-w-[min(40vw,640px)] text-[clamp(12px,1.45vh,15px)] leading-snug text-fg/75 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3] overflow-hidden min-[1280px]:kiosk:[display:-webkit-box]">
               {b.supportingCopy}
             </p>
           )}
@@ -48,7 +49,10 @@ export function Header() {
               Interactive showcase
             </span>
           )}
-          {!preview && <CustomizeButton />}
+          <div className="flex shrink-0 items-center gap-2">
+            <HowItWorksButton />
+            {!preview && <CustomizeButton />}
+          </div>
         </div>
       </div>
     </header>

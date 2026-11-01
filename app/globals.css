@@ -223,6 +223,32 @@ body {
   transform: scale(1.04);
 }
 
+/*
+ * "How it works" dialog (components/HowItWorks.tsx): a soft rise on open,
+ * and the page behind it doesn't scroll.
+ */
+.flow-dialog[open] {
+  animation: flow-dialog-in 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.flow-dialog[open]::backdrop {
+  animation: flow-backdrop-in 0.32s ease-out;
+}
+
+:root:has(.flow-dialog[open]) {
+  overflow: hidden;
+}
+
+@keyframes flow-dialog-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes flow-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

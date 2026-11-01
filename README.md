@@ -58,6 +58,8 @@ components/
   ShowcaseProvider.tsx  Shared config/state layer (persistence, save, reset)
   ShowcaseLayout.tsx    Main page composition (header, hero, two panels, footer)
   Header.tsx, CustomizeButton.tsx, Brand.tsx (logo + image fallback)
+  HowItWorks.tsx        Header "How it works" button + dialog (steps, pause, ending picker)
+  FlowDiagram.tsx       Animated flow diagram (voice wave along the call path)
   CustomerExperienceCarousel.tsx, DeviceFrame.tsx, scenes.tsx
   AdminMonitor.tsx      Monitor frame, sidebar/tab navigation, toast region
   CustomizeEditor.tsx   /customize page logic
@@ -70,6 +72,7 @@ dashboard/
 config/
   showcase-config.ts    ★ Default colours, labels and image paths (single source of truth)
   demo-data.ts          Fictional dashboard data
+  how-it-works.ts       Labels and captions for the "How it works" flow
 lib/
   config-validation.ts  Hex normalisation, contrast ratios, config/JSON validation
   config-storage.ts     localStorage (config) + IndexedDB (uploaded images)
@@ -79,6 +82,15 @@ public/
   logo/                 Official logo goes here
   showcase/             Scene images go here
 ```
+
+## "How it works" flow
+
+The **How it works** button in the header opens an animated version of the pitch-deck "Functionality" slide, for presenters to talk over at the stall:
+
+- A voice wave leaves the customer, becomes text after **Speech to text**, visits the **Reasoning brain** and the **Client knowledge base**, and becomes a voice again after **Response** — then ends at either **Leseding AI responds** or **Human agent**. It loops on its own (~16 s per loop).
+- The ending **alternates** each loop by default; the *Ending* picker pins it to one outcome. Click a numbered step to jump to it; the pause button freezes it on a step. Esc or clicking outside closes it.
+- Wording lives in `config/how-it-works.ts`. Timing (`STAGES`) and node positions (`wideLayout` for landscape screens, `tallLayout` for portrait phones) live in `components/FlowDiagram.tsx`.
+- Colours come from the theme tokens (the wave and lit path use the secondary colour), so it follows `/customize`. With reduced motion, the steps advance without the moving wave.
 
 ## How theming works
 
