@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { AudioLines, BookOpenText, Brain, FileType, Headset, MessageSquareText, Phone, UserRound } from "lucide-react";
+import { BookOpenText, Brain, FileType, MessageSquareText } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { howItWorksCopy, type FlowNodeId, type FlowOutcome } from "@/config/how-it-works";
 
@@ -96,25 +96,25 @@ export type FlowLayout = {
 export const wideLayout: FlowLayout = {
   top: 56,
   w: 1240,
-  h: 510,
+  h: 520,
   font: { label: 19, sub: 15, title: 21 },
   engine: { x: 268, y: 118, w: 652, h: 352, title: { x: 594, y: 164, anchor: "middle" } },
   nodes: {
-    customer: { x: 116, y: 294, r: 62, label: { dx: 0, dy: 98, anchor: "middle" } },
+    customer: { x: 124, y: 294, r: 70, label: { dx: 0, dy: 114, anchor: "middle" } },
     stt: { x: 378, y: 294, r: 42, label: { dx: 0, dy: 76, anchor: "middle" } },
     brain: { x: 594, y: 294, r: 58, label: { dx: 0, dy: -74, anchor: "middle" } },
     kb: { x: 594, y: 470, r: 40, label: { dx: 0, dy: 74, anchor: "middle" } },
     compose: { x: 810, y: 294, r: 42, label: { dx: 0, dy: 76, anchor: "middle" } },
-    ai: { x: 1124, y: 156, r: 54, label: { dx: 0, dy: 88, anchor: "middle" } },
-    human: { x: 1124, y: 432, r: 54, label: { dx: 0, dy: 88, anchor: "middle" } },
+    ai: { x: 1128, y: 156, r: 64, label: { dx: 0, dy: 104, anchor: "middle" } },
+    human: { x: 1128, y: 432, r: 62, label: { dx: 0, dy: 104, anchor: "middle" } },
   },
   paths: {
-    toStt: { from: [182, 294], segs: [{ l: [330, 294] }] },
+    toStt: { from: [200, 294], segs: [{ l: [330, 294] }] },
     toBrain: { from: [424, 294], segs: [{ l: [530, 294] }] },
     toKb: { from: [594, 357], segs: [{ l: [594, 424] }] },
     toCompose: { from: [657, 294], segs: [{ l: [762, 294] }] },
-    toAi: { from: [856, 294], segs: [{ l: [950, 294] }, { c: [[1000, 294], [992, 156], [1064, 156]] }] },
-    toHuman: { from: [856, 294], segs: [{ l: [950, 294] }, { c: [[1000, 294], [992, 432], [1064, 432]] }] },
+    toAi: { from: [856, 294], segs: [{ l: [950, 294] }, { c: [[1000, 294], [992, 156], [1056, 156]] }] },
+    toHuman: { from: [856, 294], segs: [{ l: [950, 294] }, { c: [[1000, 294], [992, 432], [1058, 432]] }] },
   },
 };
 
@@ -122,24 +122,24 @@ export const wideLayout: FlowLayout = {
 export const tallLayout: FlowLayout = {
   top: 0,
   w: 640,
-  h: 1170,
+  h: 1190,
   font: { label: 25, sub: 19, title: 22 },
   engine: { x: 36, y: 220, w: 568, h: 604, title: { x: 64, y: 262, anchor: "start" } },
   nodes: {
-    customer: { x: 330, y: 84, r: 58, label: { dx: 80, dy: -4, anchor: "start" } },
+    customer: { x: 330, y: 88, r: 64, label: { dx: 92, dy: -4, anchor: "start" } },
     stt: { x: 330, y: 340, r: 42, label: { dx: 64, dy: 9, anchor: "start" } },
     brain: { x: 330, y: 530, r: 58, label: { dx: 80, dy: 9, anchor: "start" } },
     kb: { x: 136, y: 530, r: 40, label: { dx: 0, dy: 74, anchor: "middle", wrap: 14 } },
     compose: { x: 330, y: 716, r: 42, label: { dx: 64, dy: 9, anchor: "start" } },
-    ai: { x: 170, y: 994, r: 54, label: { dx: 0, dy: 88, anchor: "middle", wrap: 14 } },
-    human: { x: 490, y: 994, r: 54, label: { dx: 0, dy: 88, anchor: "middle", wrap: 14 } },
+    ai: { x: 170, y: 1004, r: 64, label: { dx: 0, dy: 104, anchor: "middle", wrap: 14 } },
+    human: { x: 490, y: 1004, r: 62, label: { dx: 0, dy: 104, anchor: "middle", wrap: 14 } },
   },
   paths: {
-    toStt: { from: [330, 146], segs: [{ l: [330, 292] }] },
+    toStt: { from: [330, 158], segs: [{ l: [330, 292] }] },
     toBrain: { from: [330, 388], segs: [{ l: [330, 466] }] },
     toKb: { from: [268, 530], segs: [{ l: [182, 530] }] },
     toCompose: { from: [330, 592], segs: [{ l: [330, 668] }] },
-    toAi: { from: [330, 764], segs: [{ l: [330, 860] }, { c: [[330, 902], [170, 892], [170, 934]] }] },
+    toAi: { from: [330, 764], segs: [{ l: [330, 860] }, { c: [[330, 902], [170, 890], [170, 932]] }] },
     toHuman: { from: [330, 764], segs: [{ l: [330, 860] }, { c: [[330, 902], [490, 892], [490, 934]] }] },
   },
 };
@@ -208,18 +208,31 @@ function wrap(text: string, max = Infinity) {
 
 /* Rendering ------------------------------------------------------------ */
 
-const ICONS: Record<FlowNodeId, LucideIcon> = {
-  customer: UserRound,
+/** The steps inside the engine are icons; the people and Leseding's answer are pictures. */
+const ICONS: Partial<Record<FlowNodeId, LucideIcon>> = {
   stt: FileType,
   brain: Brain,
   kb: BookOpenText,
   compose: MessageSquareText,
-  ai: AudioLines,
-  human: Headset,
 };
 
+const PHOTOS: Partial<Record<FlowNodeId, string>> = {
+  customer: howItWorksCopy.images.customer,
+  human: howItWorksCopy.images.human,
+};
+
+/** Every picture the diagram uses, for preloading before it opens. */
+export const FLOW_IMAGES = Object.values(howItWorksCopy.images).filter(Boolean);
+
 const TILES: FlowNodeId[] = ["stt", "kb", "compose"];
-const ENDS: FlowNodeId[] = ["ai", "human"];
+
+/** How much a node grows when the wave reaches it. */
+const POP = 0.09;
+const POP_IN_MS = 480;
+const POP_OUT_MS = 380;
+
+/** Ease-out with a small overshoot: the "pop". */
+const easeOutBack = (x: number) => 1 + 2.70158 * Math.pow(x - 1, 3) + 1.70158 * Math.pow(x - 1, 2);
 
 type NodeState = "idle" | "visited" | "active";
 
@@ -268,6 +281,31 @@ export function FlowDiagram({
     if (stage.kind === "dwell" && nodeOf(stage.node) === node) return "active";
     return STAGES.slice(0, index).some((s) => s.kind === "dwell" && nodeOf(s.node) === node) ? "visited" : "idle";
   };
+
+  /**
+   * Scale of a node: pops up (with a small overshoot) when the wave arrives,
+   * and settles back once it leaves.
+   */
+  const lastDwell = (node: FlowNodeId) => {
+    for (let i = index; i >= 0; i--) {
+      const s = STAGES[i];
+      if (s.kind === "dwell" && nodeOf(s.node) === node) return i;
+    }
+    return -1;
+  };
+
+  const scaleOf = (node: FlowNodeId) => {
+    const j = lastDwell(node);
+    if (reduced || j < 0) return 1;
+    const start = STAGE_STARTS[j];
+    if (j === index) return 1 + POP * easeOutBack(Math.min(1, (t - start) / POP_IN_MS));
+    const out = (t - start - STAGES[j].ms) / POP_OUT_MS;
+    return out >= 1 ? 1 : 1 + POP * (1 - easeInOut(out));
+  };
+
+  /** Leseding's ring of ticks turns while it speaks, then holds its angle. */
+  const aiDwell = lastDwell("ai");
+  const tickAngle = reduced || aiDwell < 0 ? 0 : Math.min(t - STAGE_STARTS[aiDwell], STAGES[aiDwell].ms) * 0.03;
 
   const progressOf = (path: PathId) => {
     let prog = 0;
@@ -390,53 +428,85 @@ export function FlowDiagram({
         const g = L.nodes[id];
         const state = stateOf(id);
         const tile = TILES.includes(id);
-        const end = ENDS.includes(id);
-        const Icon = ICONS[id];
-        const iconSize = g.r * (tile ? 0.95 : 0.8);
         const lit = state !== "idle";
+        const active = state === "active";
         const copy = howItWorksCopy.nodes[id] as { label: string; sub?: string };
         const lines = wrap(copy.label, g.label.wrap);
         const lx = g.label.dx;
+        const Icon = ICONS[id];
+        const photo = PHOTOS[id];
+        const ringClass = state === "idle" ? "stroke-line-strong" : active ? "stroke-secondary" : "stroke-secondary/70";
         return (
           <g key={id} transform={`translate(${g.x} ${g.y})`}>
-            {/* halo + rings while active */}
-            <Shape tile={tile} r={g.r + 16} className={`fill-secondary/15 ${fade} ${state === "active" ? "opacity-100" : "opacity-0"}`} />
-            {state === "active" &&
+            {/* rings while active */}
+            {active &&
               !reduced &&
               [ringPhase, (ringPhase + 0.5) % 1].map((ph, i) => (
                 <Shape key={i} tile={tile} r={g.r + 6 + ph * 34} className="fill-none stroke-secondary" style={{ opacity: (1 - ph) * 0.5, strokeWidth: 2 }} />
               ))}
-            <Shape
-              tile={tile}
-              r={g.r}
-              style={{ strokeWidth: state === "idle" ? 1.5 : 3 }}
-              className={`${fade} ${
-                end && lit ? "fill-secondary stroke-secondary" : `fill-surface ${state === "idle" ? "stroke-line-strong" : state === "active" ? "stroke-secondary" : "stroke-secondary/70"}`
-              }`}
-            />
-            <Icon
-              x={-iconSize / 2}
-              y={-iconSize / 2}
-              width={iconSize}
-              height={iconSize}
-              strokeWidth={1.75}
-              aria-hidden="true"
-              className={`${fade} ${end && lit ? "text-page" : state === "active" ? "text-secondary" : state === "visited" ? "text-fg" : "text-muted"}`}
-            />
-            {id === "customer" && (
-              <g transform={`translate(${g.r * 0.72} ${g.r * 0.72})`}>
-                <circle r={g.r * 0.32} strokeWidth={3} className={`${fade} stroke-page ${lit ? "fill-secondary" : "fill-raised"}`} />
-                <Phone
-                  x={-g.r * 0.17}
-                  y={-g.r * 0.17}
-                  width={g.r * 0.34}
-                  height={g.r * 0.34}
-                  strokeWidth={2.2}
-                  aria-hidden="true"
-                  className={`${fade} ${lit ? "text-page" : "text-fg"}`}
-                />
-              </g>
-            )}
+
+            {/* the node itself pops up and glows */}
+            <g transform={`scale(${scaleOf(id)})`}>
+              <Shape tile={tile} r={g.r + (photo || id === "ai" ? 10 : 16)} className={`fill-secondary/15 ${fade} ${active ? "opacity-100" : "opacity-0"}`} />
+
+              {photo ? (
+                <>
+                  <clipPath id={`${uid}-clip-${id}`}>
+                    <circle r={g.r} />
+                  </clipPath>
+                  <image
+                    href={photo}
+                    x={-g.r}
+                    y={-g.r}
+                    width={g.r * 2}
+                    height={g.r * 2}
+                    preserveAspectRatio="xMidYMid slice"
+                    clipPath={`url(#${uid}-clip-${id})`}
+                  />
+                  {/* dims the photo until the wave reaches it */}
+                  <circle r={g.r} fill="var(--page-background)" className={`${fade} ${lit ? "opacity-0" : "opacity-50"}`} />
+                  <circle r={g.r} fill="none" style={{ strokeWidth: lit ? 4 : 2 }} className={`${fade} ${ringClass}`} />
+                </>
+              ) : id === "ai" ? (
+                <g className={`${fade} ${lit ? "opacity-100" : "opacity-50"}`}>
+                  {/* ring of ticks turns while Leseding speaks; the core breathes */}
+                  {howItWorksCopy.images.aiTicks && (
+                    <image
+                      href={howItWorksCopy.images.aiTicks}
+                      x={-g.r}
+                      y={-g.r}
+                      width={g.r * 2}
+                      height={g.r * 2}
+                      transform={`rotate(${tickAngle})`}
+                    />
+                  )}
+                  <image
+                    href={howItWorksCopy.images.aiCore}
+                    x={-g.r}
+                    y={-g.r}
+                    width={g.r * 2}
+                    height={g.r * 2}
+                    transform={`scale(${active && !reduced ? 1 + 0.035 * Math.sin(clock / 170) : 1})`}
+                  />
+                </g>
+              ) : (
+                Icon && (
+                  <>
+                    <Shape tile={tile} r={g.r} style={{ strokeWidth: lit ? 3 : 1.5 }} className={`${fade} fill-surface ${ringClass}`} />
+                    <Icon
+                      x={-g.r * (tile ? 0.475 : 0.4)}
+                      y={-g.r * (tile ? 0.475 : 0.4)}
+                      width={g.r * (tile ? 0.95 : 0.8)}
+                      height={g.r * (tile ? 0.95 : 0.8)}
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                      className={`${fade} ${active ? "text-secondary" : state === "visited" ? "text-fg" : "text-muted"}`}
+                    />
+                  </>
+                )
+              )}
+            </g>
+
             <text x={lx} y={g.label.dy} textAnchor={g.label.anchor} className="font-display">
               {lines.map((ln, i) => (
                 <tspan

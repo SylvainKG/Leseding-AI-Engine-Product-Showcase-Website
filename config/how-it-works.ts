@@ -50,4 +50,18 @@ export const howItWorksCopy = {
   /** The ending picker under the diagram. */
   endingLabel: "Ending",
   endings: { alternate: "Alternate", ai: "AI responds", human: "Human agent" },
+
+  /**
+   * Pictures for the people and the engine (files in /public/how-it-works).
+   * People are square photos shown in a circle. The engine is a transparent
+   * cut-out split in two layers: the orange core, and the ring of ticks that
+   * spins while Leseding is responding. To use a single engine picture,
+   * point `aiCore` at it and set `aiTicks` to "".
+   */
+  images: {
+    customer: "/how-it-works/customer.webp",
+    human: "/how-it-works/human-agent.webp",
+    aiCore: "/how-it-works/leseding-ai-core.webp",
+    aiTicks: "/how-it-works/leseding-ai-ticks.webp",
+  },
 };

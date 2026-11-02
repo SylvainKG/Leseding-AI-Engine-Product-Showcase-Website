@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { useReducedMotion } from "motion/react";
 import { Pause, Play, X } from "lucide-react";
-import { FlowDiagram, LOOP_MS, STEP_STARTS, stepAt, tallLayout, wideLayout } from "@/components/FlowDiagram";
+import { FLOW_IMAGES, FlowDiagram, LOOP_MS, STEP_STARTS, stepAt, tallLayout, wideLayout } from "@/components/FlowDiagram";
 import { useShowcaseView } from "@/components/ShowcaseProvider";
 import { howItWorksCopy as copy, type FlowOutcome } from "@/config/how-it-works";
 
@@ -62,6 +62,15 @@ export function HowItWorksButton() {
     if (open && !d.open) d.showModal();
     if (!open && d.open) d.close();
   }, [open]);
+
+  // Fetch the diagram's pictures once the page has settled, so they're
+  // already there the first time the dialog opens.
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      for (const src of FLOW_IMAGES) new window.Image().src = src;
+    }, 1500);
+    return () => window.clearTimeout(id);
+  }, []);
 
   return (
     <>

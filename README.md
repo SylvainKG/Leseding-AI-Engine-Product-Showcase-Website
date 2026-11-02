@@ -81,6 +81,7 @@ lib/
 public/
   logo/                 Official logo goes here
   showcase/             Scene images go here
+  how-it-works/         Pictures for the "How it works" flow
 ```
 
 ## "How it works" flow
@@ -89,6 +90,8 @@ The **How it works** button in the header opens an animated version of the pitch
 
 - A voice wave leaves the customer, becomes text after **Speech to text**, visits the **Reasoning brain** and the **Client knowledge base**, and becomes a voice again after **Response** — then ends at either **Leseding AI responds** or **Human agent**. It loops on its own (~16 s per loop).
 - The ending **alternates** each loop by default; the *Ending* picker pins it to one outcome. Click a numbered step to jump to it; the pause button freezes it on a step. Esc or clicking outside closes it.
+- The customer, the human agent and Leseding's answer are pictures; the steps inside the engine are icons. When the wave reaches a node it pops up and glows, and dims again on the next loop. Leseding's ring of ticks turns while it "speaks".
+- Pictures live in `public/how-it-works/` and are listed in `config/how-it-works.ts`. To swap a person, replace the file with a square image (it's shown in a circle). The engine picture is a transparent cut-out in two layers (`leseding-ai-core.webp`, `leseding-ai-ticks.webp`); to use a single picture instead, point `aiCore` at it and set `aiTicks` to `""`.
 - Wording lives in `config/how-it-works.ts`. Timing (`STAGES`) and node positions (`wideLayout` for landscape screens, `tallLayout` for portrait phones) live in `components/FlowDiagram.tsx`.
 - Colours come from the theme tokens (the wave and lit path use the secondary colour), so it follows `/customize`. With reduced motion, the steps advance without the moving wave.
 
